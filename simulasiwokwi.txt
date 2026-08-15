@@ -1,0 +1,41 @@
+#define LED_BIRU    25
+#define LED_PUTIH   32
+#define LED_MERAH   33
+
+#define BUTTON_BIRU  18
+#define BUTTON_PUTIH 17
+#define BUTTON_MERAH 19
+
+void setup() {
+  Serial.begin(115200);
+
+  pinMode(LED_BIRU, OUTPUT);
+  pinMode(LED_PUTIH, OUTPUT);
+  pinMode(LED_MERAH, OUTPUT);
+
+  // Default LOW saat tidak ditekan -> tidak floating -> LED tidak nyala sendiri
+  pinMode(BUTTON_BIRU, INPUT_PULLDOWN);
+  pinMode(BUTTON_PUTIH, INPUT_PULLDOWN);
+  pinMode(BUTTON_MERAH, INPUT_PULLDOWN);
+
+  // Semua LED mati di awal (LED aktif HIGH)
+  digitalWrite(LED_BIRU, LOW);
+  digitalWrite(LED_PUTIH, LOW);
+  digitalWrite(LED_MERAH, LOW);
+}
+
+void loop() {
+  int biruDitekan  = digitalRead(BUTTON_BIRU)  == HIGH;
+  int putihDitekan = digitalRead(BUTTON_PUTIH) == HIGH;
+  int merahDitekan = digitalRead(BUTTON_MERAH) == HIGH;
+
+  digitalWrite(LED_BIRU,  biruDitekan  ? HIGH : LOW);
+  digitalWrite(LED_PUTIH, putihDitekan ? HIGH : LOW);
+  digitalWrite(LED_MERAH, merahDitekan ? HIGH : LOW);
+
+  Serial.print("Biru: ");   Serial.print(biruDitekan);
+  Serial.print(" | Putih: "); Serial.print(putihDitekan);
+  Serial.print(" | Merah: "); Serial.println(merahDitekan);
+
+  delay(50);
+}
